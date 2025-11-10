@@ -8,17 +8,17 @@
 - HW 3: Model-based Bias Removal in Machine Learning using Synthetic Blood Pressure Data
 
 ## Key Insights
-- SBP/DBP trends from Table III are well captured by both quadratic and physiologically motivated sigmoid/Gaussian models (SBP MSE ~0.065 mmHg^2, R^2~0.999; DBP Gaussian MSE 0.801 mmHg^2, R^2 0.9341). The sigmoidal SBP inflection lies outside the observed ages, signposting where additional pediatric data would improve identifiability.
+- SBP/DBP trends from Table III are well captured by both quadratic and physiologically motivated sigmoid/Gaussian models (SBP MSE 0.065 mmHg^2, R^2 0.999; DBP Gaussian MSE 0.801 mmHg^2, R^2 0.9341). The sigmoidal SBP inflection lies outside the observed ages, signposting where additional pediatric data would improve identifiability.
 - A 400-draw bootstrap demonstrates that the SBP fits remain tightly clustered (MSE 0.042 +/- 0.03 mmHg^2, R^2 CI 0.997-1.000) and that the DBP Gaussian retains lower residuals than the quadratic model (MSE mean 0.447 vs. 0.500 mmHg^2), providing explicit uncertainty bounds.
 - Synthetic SBP/DBP sampling via sex-specific bivariate normals (N=100k) recreates the desired means, variances, and correlations, which in turn allows precise prevalence sweeps for bias analysis.
-- Unweighted logistic regression mirrors class prevalence: accuracy can rise to 0.90 while the minority's recall collapses to ~0, producing TPR gaps up to +/-0.99. Balanced accuracy/recall plots make this failure obvious.
+- Unweighted logistic regression mirrors class prevalence: accuracy can rise to 0.90 while the minority's recall collapses to 0, producing TPR gaps up to +/-0.99. Balanced accuracy/recall plots make this failure obvious.
 - Class-weighted logistic regression (`class_weight='balanced'`) keeps both male and female recall within 0.56-0.60 and holds balanced accuracy near 0.58 across all prevalence ratios, showing that loss reweighting is an effective model-based mitigation.
 
 ## Comparative Model Performance
 
 ### Blood Pressure vs Age Fits
 - Data: Table III mean SBP/DBP values across nine age midpoints were fit with both quadratic and nonlinear (sigmoid/Gaussian) models.
-- Both SBP models achieve MSE ~0.065 mmHg^2 and R^2~0.999; the DBP Gaussian lowers the residuals compared to the quadratic fit (0.801 vs. 0.898 mmHg^2).
+- Both SBP models achieve MSE 0.065 mmHg^2 and R^2 0.999; the DBP Gaussian lowers the residuals compared to the quadratic fit (0.801 vs. 0.898 mmHg^2).
 - The sigmoidal SBP inflection occurs before the observed age range, indicating that the logistic prior extrapolates and would benefit from pediatric data or a 4-parameter logistic model.
 
 | Model | MSE (mmHg^2) | R^2 |
@@ -100,7 +100,7 @@
 
 ![Recall Disparity (Balanced)](Figures/fairness_balanced.png)
 
-*Effect on Fairness:* Loss reweighting keeps recall for both sexes between 0.57 and 0.60 regardless of prevalence, demonstrating a simple yet principled bias mitigation aligned with the homework prompt.
+*Effect on Fairness:* Loss reweighting keeps recall for both sexes between 0.57 and 0.60 regardless of prevalence, demonstrating a simple yet principled bias mitigation.
 
 ---
 
